@@ -1,0 +1,45 @@
+{
+  "name": "pdf-report",
+  "version": "1.0.0",
+  "description": "A simple backend to manage tasks and generate pdf reports made in jsreport.",
+  "main": "n/a",
+  "scripts": {
+    "dev": "npm run development",
+    "development": "nodemon ./server.js",
+    "start": "node ./server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonLemOfficial/express-pdf-report.git"
+  },
+  "keywords": [
+    "pdf-file",
+    "pdf-generation",
+    "pdf-tasks",
+    "pdf-charts"
+  ],
+  "author": {
+    "name": "Jonathan \"JonLem\" Lemos",
+    "email": "mail@jonlemofficial.com",
+    "url": "https://jonlemofficial.com",
+    "github": "https://github.com/JonLemOfficial",
+    "twitter": "https://twiiter.com/JonLemOfficial"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JonLemOfficial/express-pdf-report/issues"
+  },
+  "homepage": "https://github.com/JonLemOfficial/express-pdf-report#readme",
+  "dependencies": {
+    "@jsreport/jsreport-chrome-pdf": "^3.2.0",
+    "@jsreport/jsreport-core": "^3.7.0",
+    "@jsreport/jsreport-ejs": "^3.0.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.5",
+    "puppeteer": "^17.1.3"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.19"
+  }
+}
