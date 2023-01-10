@@ -1,13 +1,14 @@
 const { Router } = require("express");
-const TasksController = require("./controllers/TasksController");
+const InvoiceController = require("./controllers/InvoiceController");
 
 const router = Router();
 
-router.get("/tasks", TasksController.get);
-router.get("/tasks/pdf", TasksController.getPDF);
-router.post("/tasks/create", TasksController.create);
-router.get("/tasks/:id", TasksController.get);
-router.put("/tasks/update/:id", TasksController.update);
-router.delete("/tasks/delete/:id", TasksController.delete);
+router.get("/invoices", InvoiceController.get);
+router.get("/invoices/pdf", InvoiceController.getPDF);
+router.get("/invoices/create", InvoiceController.create);
+router.post("/invoices/create", InvoiceController.create);
+router.get("/invoices/:id", InvoiceController.get);
+router.put("/invoices/update/:id", InvoiceController.update);
+router.delete("/invoices/delete/:id", InvoiceController.delete);
 
 module.exports = router;

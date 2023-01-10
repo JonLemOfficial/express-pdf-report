@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+
+    <div id="app">
+
+      <form action="." method="POST">
+        
+        <div>
+          <label for="product_name">
+            <span class="lbl-desc">Nombre del producto</span>
+            <br/>
+            <input type="text" id="product_name" name="product_name" value=""/>
+          </label>
+        </div>
+
+        <div>
+          <div style="display: inline-block;">
+            <label for="product_price">
+              <span class="lbl-desc">Precio</span>
+              <br/>
+              <input style="text-align: right;" type="number" min="0" max="100000" id="product_price" name="product_price" value="0"/>
+            </label>
+          </div>
+          <div style="display: inline-block;">
+            <label for="product_quantity">
+              <span class="lbl-desc">Cantidad</span>
+              <br/>
+              <input style="text-align: right;" type="number" min="0" max="1000" id="product_quantity" name="product_quantity" value="0"/>
+            </label>
+          </div>
+        </div>
+
+        <div class="btn-container" style="margin: 20px auto;">
+          <button type="button" id="btn-add-to-order">Agregar a la factura</button>
+          <button type="button" id="btn-procedd-to-pay">Proceder a pagar</button>
+          <button type="button" id="btn-cancel-sell">Cancelar venta</button>
+        </div>
+
+      </form>
+
+      <div style="width:700px">
+        <table style="width: 100%;" border="1">
+          <thead>
+            <tr>
+              <th>linea</th>
+              <th>Nombre del producto</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="order-details">
+            <!--<tr>
+               <td>1</td>
+              <td>My Product</td>
+              <td>45</td>
+              <td>3</td>
+              <td>135</td>
+              <td>
+                <button type="button">
+                  Borrar
+                </button>
+              </td> 
+            </tr> -->
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="6">
+                <div style="text-align: right;" class="inv-total-info">
+                  <!-- TODO: Show total order to pay on adding products to list -->
+                  <span id="inv-total-txt">Total: 0</span>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+    </div>
+
+    <script type="text/javascript" src="/assets/js/dists/jquery.min.js"></script>
+    <script type="text/javascript">
+
+      var products_table_current_line = 0;
+      
+      function remove(line_index) {
+        for (let line of $('#order-details tr')) {
+          if ( parseInt(line.dataset.index) === parseInt(line_index) ) {
+            line.remove();
+            products_table_current_line -= 1;
+          }
+        }
+
+        var rows = $('#order-details tr');
+
+        for (let i = 0; i < rows.length; i++) {
+          rows[i].dataset.index = i + 1;
+          rows[i].firstElementChild.innerHTML = i + 1;
+
+          // TODO: Update the delete button 'data-index' prop 
+          //rows[i].lastElementChild.[] = ...;
+        }
+      }
+
+      (function() {
+
+        var $btn_add = $('#btn-add-to-order');
+        var $btn_cancel = $('#btn-cancel-sell');
+        var $btn_procedd = $('#btn-procedd-to-pay');
+        var order_products = [];
+        var product_to_add;
+
+        $btn_add.click(function (e) {
+          product_to_add = {
+            line: products_table_current_line + 1,
+            name: $('#product_name').val(),
+            price: parseFloat($('#product_price').val()),
+            quantity: parseInt($('#product_quantity').val()),
+            total: parseFloat($('#product_price').val()) * parseInt($('#product_quantity').val())
+          };
+
+          products_table_current_line += 1;
+          order_products.push(product_to_add);
+
+          // reset form fields values on add to order details
+          $('#product_name').val('');
+          $('#product_price').val(0);
+          $('#product_quantity').val(0);
+
+          // console.log(order_products);
+          $('#order-details').html( 
+            $('#order-details').html() + ([
+              '<tr data-index="'+ products_table_current_line +'">',
+              '  <td>'+ product_to_add["line"] +'</td>',
+              '  <td>'+ product_to_add["name"] +'</td>',
+              '  <td>'+ product_to_add["price"] +'</td>',
+              '  <td>'+ product_to_add["quantity"] +'</td>',
+              '  <td>'+ product_to_add["total"] +'</td>',
+              '  <td>',
+              '    <button type="button" onclick="remove('+ products_table_current_line +')">',
+              '      Borrar',
+              '    </button>',
+              '  </td>',
+              '</tr>'
+            ].join(''))
+          );
+        });
+
+        $btn_cancel.click(function(e) {
+          $('#order-details').html('');
+          products_table_current_line = 0;
+          
+        });
+
+        $btn_procedd.click(function (e) {
+          
+        });
+
+      })();
+    </script>
+  </body>
+</html>
